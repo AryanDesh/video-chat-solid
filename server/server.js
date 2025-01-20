@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const app = require('express')();
 const server = require('http').createServer(app);
-
+const cors = require('cors');
 app.use(cors({
   origin: 'https://video-chat-solid.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
