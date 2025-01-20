@@ -2,9 +2,18 @@ require('dotenv').config();
 
 const app = require('express')();
 const server = require('http').createServer(app);
+
+app.use(cors({
+  origin: 'https://video-chat-solid.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+}));
+
+
 const io = require('socket.io')(server, {
-  cors: { origin: '*'},
-});
+  cors: {
+    origin: 'https://video-chat-solid.vercel.app', 
+    methods: ['GET', 'POST'], 
+  }});
 
 const { v4 : uuidV4 } = require('uuid');
 
@@ -21,7 +30,7 @@ function removeUser(roomID, userID) {
 }
 
 io.on('connection', socket => {
-
+  console.log("connected", socket.id);
   socket.on('create-room', () => {
     const roomID = uuidV4();
     roomMembers[roomID] = [];
@@ -53,4 +62,6 @@ io.on('connection', socket => {
 
 })
 
-server.listen(PORT)
+server.listen(PORT, () => {
+  console.log("Running on Port " + PORT);
+})
