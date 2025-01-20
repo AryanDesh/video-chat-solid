@@ -5,13 +5,8 @@ import { Peer } from 'peerjs'
 export const SocketContext = createContext();
 
 export const SocketContextProvider = (props) => {
-  const socket = createMemo(() => io('https://video-chat-solid-production.up.railway.app/')); // Deployed
-  // const socket = createMemo(() => io('http://localhost:5000'));
+  const socket = createMemo(() => io(import.meta.env.VITE_BACKEND_URL)); // Deployed
   const peer = createMemo(() => new Peer());
-
-  // let socket;
-  // let peer;
-
   const [peerID, setPeerID] = createSignal('');
 
   peer().on('open', id => {
